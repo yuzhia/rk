@@ -10,7 +10,7 @@ export default () => {
   // console.log(envConfig)
   return defineConfig({
     server: {
-      host: '0.0.0.0',
+      // host: '0.0.0.0',
       port: 32001,
       open: false,
       // 代理

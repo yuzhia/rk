@@ -11,12 +11,6 @@ export const setLocalStorage = (key, data) => {
  */
 export const getLocalStorage = key => {
   let data = window.localStorage.getItem(key)
-  // if (data) {
-  //   console.log('data', Object.prototype.toString.call(data));
-  //   console.log('data.length', data.length);
-  //   data = JSON.parse(data);
-  // }
-  // return data;
   try {
     if (data) {
       data = JSON.parse(data)

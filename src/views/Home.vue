@@ -19,7 +19,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- <SelectSubject></SelectSubject> -->
-  <h1>手写板</h1>
-  <canvas ref="canvas"></canvas>
+  <SelectSubject></SelectSubject>
+  <!-- <h1>手写板</h1> -->
+  <!-- <canvas ref="canvas"></canvas> -->
 </template>

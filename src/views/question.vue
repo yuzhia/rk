@@ -14,6 +14,7 @@ quesitonApi
   .listByPaperId(paperId)
   .then(res => {
     questionList.value = res.data
+    console.log(res)
   })
   .then(() => {
     updateEle()
@@ -71,30 +72,30 @@ watch(
 
 <template>
   <van-swipe class="my-swipe" :show-indicators="false" :loop="false">
-    <van-swipe-item v-for="(item, index) in questionList" :key="item.id">
+    <van-swipe-item v-for="item in questionList" :key="item.id">
       <div class="item">
         <div class="option">
           <div class="title" v-html="item.title"></div>
           <div
             class="simple-option"
-            v-for="(option, i) in item.optionList"
-            :key="option.id"
-            @click.prevent="userClick(item.id, item.answer, option.id)"
+            v-for="choice in item.choices"
+            :key="choice.id"
+            @click.prevent="userClick(item.id, item.answer, choice.key)"
           >
-            <span class="letter">{{ option.id }}</span>
-            <span class="circle" :class="option.id + item.id"></span>
+            <span class="letter">{{ choice.key }}</span>
+            <span class="circle" :class="choice.key + item.id"></span>
             <input
               style="display: none"
               type="radio"
               :name="item.id"
-              :value="option.id"
+              :value="choice.key"
             />
-            <label :for="item.id + option.id" v-html="option.content"></label>
+            <label :for="item.id + choice.key" v-html="choice.content"></label>
           </div>
         </div>
         <div class="analyze">
           <div class="tag">试题解析</div>
-          <div v-html="item.analysis"></div>
+          <div v-html="item.parse"></div>
         </div>
       </div>
     </van-swipe-item>
@@ -109,6 +110,16 @@ watch(
 
 <style lang="scss" scoped>
 $letterSize: 32px;
+
+:deep(pre) {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  font-family: Helvetica;
+  padding: 10px;
+}
 .my-swipe {
   height: 100%;
   background-color: white;
@@ -117,9 +128,6 @@ $letterSize: 32px;
 .item {
   padding: 10px;
   .option {
-    // display: flex;
-    // position: relative;
-    // background-color: pink;
     margin-bottom: 20px;
 
     .title {
@@ -149,7 +157,6 @@ $letterSize: 32px;
       }
 
       .circle {
-        // flex-shrink: 0;
         width: $letterSize - 2;
         height: $letterSize - 2;
         border: #ddd solid 1px;
@@ -158,9 +165,6 @@ $letterSize: 32px;
         left: 5;
       }
       label {
-        // flex-grow: 1;
-        // word-break: break-all;
-        // word-wrap: break-word;
         margin-left: 10px;
       }
     }

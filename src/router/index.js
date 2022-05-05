@@ -15,7 +15,7 @@ const routes = [
   {
     path: '/chapter',
     name: 'chapter',
-    component: () => import('@/views/chapter.vue'),
+    component: () => import('@/views/knowledge.vue'),
     meta: { title: '章节' }
   },
   {

@@ -1,18 +1,13 @@
 <script setup>
 import paperApi from '@/api/paperApi.js'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
 const active = ref(0)
 const list = ref([])
-const subjectId = 11
-
-const tabTitle = [
-  { type: 5, title: '综合' },
-  { type: 6, title: '案例' }
-]
+const subjectId = 18
 
 // 跳转路由
 const toQuestion = paperId => {
@@ -30,38 +25,28 @@ const getData = id => {
 
 getData(subjectId)
 
-// 过滤数据
-const filterList = computed(() => {
-  return list.value.filter(item => item.paperType === active.value)
-})
+const splitStr = str => {
+  return str.substring(0, str.lastIndexOf(' '))
+}
 </script>
 
 <template>
   <van-nav-bar title="标题" :border="false" />
   <van-tabs v-model:active="active" swipeable :line-height="2" color="#3a9efe">
     <van-tab
-      v-for="tab in tabTitle"
-      :key="tab.type"
-      :title="tab.title"
-      :name="tab.type"
+      v-for="(value, key) in list"
+      :key="key"
+      :title="key == 0 ? '综合练习' : key == 1 ? '案例' : '论文'"
     >
-      <!-- <van-list>
-        <van-cell
-          v-for="item in filterList"
-          :key="item.id"
-          :value="item.name"
-          is-link
-        />
-      </van-list> -->
       <div
         class="panel-box"
-        v-for="item in filterList"
+        v-for="item in value"
         :key="item.id"
         @click="toQuestion(item.id)"
       >
         <div class="paper">
           <div class="title-box">
-            <span>{{ item.name }}</span>
+            <span>{{ splitStr(item.name) }}</span>
           </div>
           <div class="paper-record">
             <span>未开始</span>
